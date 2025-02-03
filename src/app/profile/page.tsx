@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import PostCard from "@/app/post/post-card";
 import ProtectedRoute from "@/components/protected-route";
 import {
   Card,
@@ -8,14 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { prisma } from "@/lib/prisma";
-import UserActions from "./user-actions";
 import { Separator } from "@/components/ui/separator";
-import { Suspense } from "react";
-import PostCardLikeButton, {
-  LikeButtonPlaceholder,
-} from "../post/post-card-like-button";
+import { prisma } from "@/lib/prisma";
 import { toPostWithLikesInfo } from "../post/controller";
+import ProfilePostsList from "./profile-posts-list";
+import UserActions from "./user-actions";
 
 const ProfilePage = async () => {
   const session = await auth();
@@ -55,15 +51,7 @@ const ProfilePage = async () => {
             <Separator />
             <CardContent className="pt-6">
               <h3 className="text-lg font-semibold mb-4">Your Posts</h3>
-              <div className="space-y-4">
-                {posts.map((post) => (
-                  <PostCard key={post.id} post={post} userId={user.id}>
-                    <Suspense fallback={<LikeButtonPlaceholder />}>
-                      <PostCardLikeButton post={post} userId={user.id} />
-                    </Suspense>
-                  </PostCard>
-                ))}
-              </div>
+              <ProfilePostsList posts={posts} userId={user.id} />
             </CardContent>
           </Card>
         </div>

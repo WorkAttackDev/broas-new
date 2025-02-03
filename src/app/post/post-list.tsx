@@ -1,21 +1,16 @@
 "use client";
 
-import { useEffect, useRef, Suspense, useState, JSX } from "react";
+import { useEffect, useRef, Suspense, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import type {
-  PostActionComponentProps,
-  PostActionType,
-  PostWithLikesInfoType,
-} from "@/app/post/schema";
+import type { PostActionType, PostWithLikesInfoType } from "@/app/post/schema";
 import { getPostsAction } from "@/app/post/actions";
 import PostCard from "@/app/post/post-card";
 import PostCardLikeButton, {
   LikeButtonPlaceholder,
 } from "@/app/post/post-card-like-button";
 import { POSTS_CACHE_TAG } from "@/app/post/constants";
-import EditPostDialog from "@/app/post/edit-post-dialog";
-import { DeletePostAlert } from "@/app/post/delete-post-alert";
+import PostActions from "./post-actions";
 
 type Props = {
   initialPosts: PostWithLikesInfoType[];
@@ -31,14 +26,6 @@ export default function PostList({ initialPosts, userId }: Props) {
   const [selectedPostAction, setSelectedPostAction] = useState<
     PostActionType | undefined
   >();
-
-  const actionComponent = {
-    edit: EditPostDialog,
-    delete: DeletePostAlert,
-  } satisfies Record<
-    PostActionType["action"],
-    (props: PostActionComponentProps) => JSX.Element
-  >;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -87,16 +74,10 @@ export default function PostList({ initialPosts, userId }: Props) {
             </Suspense>
           </PostCard>
         ))}
-        <div>
-          {Object.entries(actionComponent).map(([key, Component]) => (
-            <Component
-              key={key}
-              onClose={() => setSelectedPostAction(undefined)}
-              open={selectedPostAction && selectedPostAction.action === key}
-              post={selectedPostAction?.post}
-            />
-          ))}
-        </div>
+        <PostActions
+          selectedPostAction={selectedPostAction}
+          setSelectedPostAction={setSelectedPostAction}
+        />
         {hasNextPage && (
           <div ref={ref} className="text-center text-gray-500">
             {isFetchingNextPage ? "carregando mais postagens" : ""}
