@@ -1,0 +1,75 @@
+import { auth } from "@/auth";
+import PostCard from "@/app/post/post-card";
+import ProtectedRoute from "@/components/protected-route";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { prisma } from "@/lib/prisma";
+import UserActions from "./user-actions";
+import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
+import PostCardLikeButton, {
+  LikeButtonPlaceholder,
+} from "../post/post-card-like-button";
+import { toPostWithLikesInfo } from "../post/controller";
+
+const ProfilePage = async () => {
+  const session = await auth();
+
+  const user = await prisma.user.findUnique({
+    where: { id: session?.user?.id },
+    include: {
+      posts: {
+        include: {
+          author: true,
+        },
+        take: 50,
+      },
+    },
+  });
+
+  if (!user) {
+    return <div>User not found</div>;
+  }
+
+  const posts = user.posts.map(toPostWithLikesInfo);
+
+  return (
+    <ProtectedRoute>
+      <main className="grid h-[70vh] place-items-center">
+        <div className="max-w-4xl py-10">
+          <Card className="shadow-none">
+            <CardHeader>
+              <div className="flex flex-wrap gap-8 items-center justify-between">
+                <div>
+                  <CardTitle className="text-2xl">{user.name}</CardTitle>
+                  <CardDescription>{user.email}</CardDescription>
+                </div>
+                <UserActions user={user} />
+              </div>
+            </CardHeader>
+            <Separator />
+            <CardContent className="pt-6">
+              <h3 className="text-lg font-semibold mb-4">Your Posts</h3>
+              <div className="space-y-4">
+                {posts.map((post) => (
+                  <PostCard key={post.id} post={post} userId={user.id}>
+                    <Suspense fallback={<LikeButtonPlaceholder />}>
+                      <PostCardLikeButton post={post} userId={user.id} />
+                    </Suspense>
+                  </PostCard>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </ProtectedRoute>
+  );
+};
+
+export default ProfilePage;

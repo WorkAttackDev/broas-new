@@ -1,0 +1,8 @@
+# Code Rules
+
+- always use `type` instead of `interface` when possible.
+- if you are not exporting the prop type, just call it `Props`.
+- don't use `React.FC` for components, use the syntax `{}: Props` instead.
+- aside from library configuration, create the component in the `app` directory on the respective folder.
+- most of the cases use object for props instead of multiple arguments.
+- all the server actions functions should end with `Action` suffix.
