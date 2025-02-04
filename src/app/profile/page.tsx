@@ -50,7 +50,7 @@ const ProfilePage = async () => {
             </CardHeader>
             <Separator />
             <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold mb-4">Your Posts</h3>
+              <h3 className="text-lg font-semibold mb-4">Seus posts</h3>
               <ProfilePostsList posts={posts} userId={user.id} />
             </CardContent>
           </Card>

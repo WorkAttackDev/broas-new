@@ -80,7 +80,7 @@ export const togglePostLikeAction = async ({ postId }: { postId: string }) => {
     });
   }
 
-  revalidatePath("/");
+  // revalidatePath("/");
 };
 
 export const getPostsAction = async ({

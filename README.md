@@ -1,4 +1,6 @@
 # todos
 
 - Make the like button no flick on click.
-- adicionar três pontos nos cards de post para editar e deletar o post, se o usuário for o autor.
+- add rate limit to posts
+- unify login and sign up into continue.
+- better auth ui

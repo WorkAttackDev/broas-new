@@ -2,7 +2,7 @@
 
 import { PostWithLikesInfoType } from "@/app/post/schema";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { togglePostLikeAction } from "@/app/post/actions";
 import { use } from "react";
@@ -27,7 +27,7 @@ export const LikeButtonPlaceholder = () => {
         size="icon"
         className="bg-muted text-secondary ease-out duration-200"
       >
-        <Heart className={cn("h-4 w-4 ease-out duration-200")} />
+        <Loader2 className="size-4 ease-out duration-200 animate-spin" />
       </Button>
     </div>
   );
@@ -57,7 +57,10 @@ const PostCardLikeButton = ({ post, userId }: Props) => {
     };
     addOptimistic(optimisticValue);
     togglePostLikeAction({ postId: post.id })
-      .catch(() => toast.error("Ocorreu um erro ao curtir o post"))
+      .catch(() => {
+        addOptimistic(likeInfo);
+        toast.error("Ocorreu um erro ao curtir o post");
+      })
       .then(() => {
         queryClient.invalidateQueries({ queryKey: [POSTS_CACHE_TAG] });
       });

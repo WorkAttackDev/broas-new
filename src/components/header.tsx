@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/auth";
 import HeaderUser from "./header-user";
-import { EditPostDialogWithState } from "../app/post/edit-post-dialog";
+import EditPostDialog from "../app/post/edit-post-dialog";
 
 const Header = async () => {
   const session = await auth();
@@ -21,7 +21,7 @@ const Header = async () => {
       </Link>
       <p className="text-gray-400">encontre aqui as melhores broas</p>
       <span className="flex gap-4 items-center">
-        {user ? <EditPostDialogWithState /> : null}
+        {user ? <EditPostDialog /> : null}
         <HeaderUser session={session} />
       </span>
     </header>

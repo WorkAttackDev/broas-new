@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
-import EditPostDialog from "./edit-post-dialog";
 import { DeletePostAlert } from "./delete-post-alert";
 import { PostActionComponentProps, PostActionType } from "./schema";
+import EditPostDialog from "./edit-post-dialog";
 
 type Props = {
   selectedPostAction: PostActionType | undefined;
@@ -23,6 +23,18 @@ const PostActions = ({ selectedPostAction, setSelectedPostAction }: Props) => {
     <Component
       key={key}
       onClose={() => setSelectedPostAction(undefined)}
+      setOpen={(open) => {
+        if (open && selectedPostAction) {
+          setSelectedPostAction({
+            action: key as PostActionType["action"],
+            post: selectedPostAction?.post,
+          });
+          return true;
+        } else {
+          setSelectedPostAction(undefined);
+          return false;
+        }
+      }}
       open={selectedPostAction && selectedPostAction.action === key}
       post={selectedPostAction?.post}
     />

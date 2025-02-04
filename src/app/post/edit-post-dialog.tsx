@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusCircle } from "lucide-react";
-import { ReactNode, useState, useTransition } from "react";
+import { ReactNode, useState, useTransition, useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import {
   Dialog,
@@ -38,13 +38,20 @@ type Props = {
   children?: ReactNode;
 };
 
-export const EditPostDialogWithState = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(props.open);
-  return <EditPostDialog open={isOpen} setOpen={setIsOpen} {...props} />;
-};
+const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
+  const [isOpen, setIsOpen] = useState(open);
 
-const EditPostDialog = ({ post, children, open, onClose, setOpen }: Props) => {
+  useEffect(() => {
+    setIsOpen(open);
+    form.reset({
+      content: post?.content || "",
+    });
+  }, [open]);
+
+  const onOpenChange = setOpen || setIsOpen;
+
   const [isPending, startTransition] = useTransition();
+
   const form = useForm<EditPostType>({
     resolver: zodResolver(editPostSchema),
     defaultValues: {
@@ -55,8 +62,7 @@ const EditPostDialog = ({ post, children, open, onClose, setOpen }: Props) => {
   const { handleSubmit, control } = form;
 
   const _onClose = () => {
-    onClose?.();
-    setOpen?.(false);
+    onOpenChange(false);
   };
 
   const onSubmit = async (values: EditPostType) => {
@@ -78,7 +84,7 @@ const EditPostDialog = ({ post, children, open, onClose, setOpen }: Props) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         {children || (
           <Button>
