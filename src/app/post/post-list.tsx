@@ -57,7 +57,7 @@ export default function PostList({ initialPosts, userId }: Props) {
       },
       initialData: () => ({
         pages: [initialPosts],
-        pageParams: [initialPosts[0]?.id],
+        pageParams: [undefined],
       }),
     });
 
