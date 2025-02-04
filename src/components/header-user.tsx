@@ -36,7 +36,7 @@ const HeaderUser = ({ session }: Props) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl z-10"
+            className="absolute right-0 mt-2 w-max bg-white rounded-md shadow-xl z-10"
           >
             <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />

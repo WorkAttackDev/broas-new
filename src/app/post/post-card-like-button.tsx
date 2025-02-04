@@ -20,14 +20,14 @@ type Props = {
 
 export const LikeButtonPlaceholder = () => {
   return (
-    <div className="flex text-secondary gap-2 text-sm items-center">
+    <div className="flex text-muted-foreground gap-2 text-sm items-center">
       <Button
         type="submit"
         variant="ghost"
         size="icon"
-        className="bg-muted text-secondary ease-out duration-200"
+        className="bg-muted text-muted-foreground ease-out duration-200"
       >
-        <Loader2 className="size-4 ease-out duration-200 animate-spin" />
+        <Loader2 className="size-2 sm:size-4 ease-out duration-200 animate-spin" />
       </Button>
     </div>
   );
@@ -67,7 +67,7 @@ const PostCardLikeButton = ({ post, userId }: Props) => {
   };
   if (!userId) {
     return (
-      <div className="flex text-secondary gap-2 text-sm items-center">
+      <div className="flex text-muted-foreground gap-2 text-sm items-center">
         <Link
           href={links.signin.href}
           className={cn(
@@ -75,10 +75,10 @@ const PostCardLikeButton = ({ post, userId }: Props) => {
               variant: "ghost",
               size: "icon",
             }),
-            "bg-muted text-secondary ease-out duration-200"
+            "bg-muted text-muted-foreground ease-out duration-200"
           )}
         >
-          <Heart className="h-4 w-4 ease-out duration-200" />
+          <Heart className="size-2 sm:size-4 ease-out duration-200" />
         </Link>
         {likes}
       </div>
@@ -87,17 +87,17 @@ const PostCardLikeButton = ({ post, userId }: Props) => {
   return (
     <form
       action={toggleLike}
-      className="flex text-secondary gap-2 text-sm items-center"
+      className="flex text-muted-foreground gap-2 text-sm items-center"
     >
       <Button
         type="submit"
         variant="ghost"
         size="icon"
-        className="bg-muted text-secondary ease-out duration-200"
+        className="bg-muted text-muted-foreground ease-out duration-200"
       >
         <Heart
           className={cn(
-            "h-4 w-4 ease-out duration-200",
+            "size-2 sm:size-4 ease-out duration-200",
             liked && "fill-red-500 text-red-500"
           )}
         />

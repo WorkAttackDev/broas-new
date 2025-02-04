@@ -75,10 +75,10 @@ export default function PostList({ initialPosts, userId }: Props) {
   }, [inView, hasNextPage, fetchNextPage]);
 
   return (
-    <main className="p-4 w-full grid items-center">
+    <main className="p-6 sm:p-10 w-full grid items-center">
       <section
         ref={listContainerRef}
-        className="grid w-[80vw] gap-4 max-w-4xl mx-auto"
+        className="grid w-full gap-4 max-w-4xl mx-auto"
       >
         {posts.map((post) => (
           <PostCard

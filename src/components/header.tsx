@@ -11,22 +11,24 @@ const Header = async () => {
   const user = session?.user;
 
   return (
-    <header className="flex sticky top-0 z-40 bg-white justify-between gap-4 items-center mb-8 px-10 py-4">
+    <header className="flex sticky top-0 z-40 bg-white justify-between gap-4 items-center px-6 py-2  sm:px-10 sm:py-4">
       <Link href="/">
         <Image
           src="/broas-logo.svg"
           alt="Broas Logo"
           width={100}
           height={30}
-          className="w-20 h-auto"
+          className="w-14 sm:w-20 h-auto"
         />
       </Link>
-      <p className="text-gray-400">encontre aqui as melhores broas</p>
+      <p className="text-gray-400 max-sm:hidden">
+        encontre aqui as melhores broas
+      </p>
       <span className="flex gap-4 items-center">
         {user ? (
           <EditPostDialog>
             <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="size-2 sm:size-4" />
               Postar
             </Button>
           </EditPostDialog>

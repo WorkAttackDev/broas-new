@@ -19,7 +19,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../../components/ui/form";
 import { Textarea } from "../../components/ui/textarea";
@@ -89,7 +88,7 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
         className="sm:max-w-[425px]"
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        <DialogHeader>
+        <DialogHeader className="text-left">
           <DialogTitle>{post ? "Atualizar Broa" : "Postar Broa"}</DialogTitle>
           <DialogDescription>
             {post
@@ -98,13 +97,16 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 sm:gap-6"
+          >
             <FormField
               control={control}
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="content">Conteúdo</FormLabel>
+                  {/* <FormLabel htmlFor="content">Conteúdo</FormLabel> */}
                   <FormControl>
                     <Textarea
                       id="content"
@@ -116,13 +118,21 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className="flex items-center flex-row gap-4">
               <DialogClose asChild onClick={_onClose}>
-                <Button type="button" variant="secondary">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="leading-none"
+                >
                   Voltar
                 </Button>
               </DialogClose>
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="leading-none"
+              >
                 {post ? "Editar" : "Postar"}
               </Button>
             </DialogFooter>

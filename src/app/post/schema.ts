@@ -15,8 +15,8 @@ export type PostWithLikesInfoType = PostType & {
 export const editPostSchema = z.object({
   content: z
     .string()
-    .min(1, "O conteúdo é obrigatório")
-    .max(500, "O conteúdo é muito longo"),
+    .min(5, "A publicação deve ter pelo menos 5 caracteres")
+    .max(300, "A publicação deve ter no máximo 300 caracteres"),
 });
 
 export type EditPostType = z.infer<typeof editPostSchema>;

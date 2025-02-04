@@ -38,11 +38,13 @@ const ProfilePage = async () => {
     <ProtectedRoute>
       <main className="grid h-[70vh] place-items-center">
         <div className="max-w-4xl py-10">
-          <Card className="shadow-none">
+          <Card>
             <CardHeader>
               <div className="flex flex-wrap gap-8 items-center justify-between">
                 <div>
-                  <CardTitle className="text-2xl">{user.name}</CardTitle>
+                  <CardTitle className="text-xl sm:text-2xl">
+                    {user.name}
+                  </CardTitle>
                   <CardDescription>{user.email}</CardDescription>
                 </div>
                 <UserActions user={user} />
@@ -50,7 +52,9 @@ const ProfilePage = async () => {
             </CardHeader>
             <Separator />
             <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold mb-4">Seus posts</h3>
+              <h3 className="text-base sm:text-lg font-semibold mb-4">
+                Seus posts
+              </h3>
               <ProfilePostsList posts={posts} userId={user.id} />
             </CardContent>
           </Card>
