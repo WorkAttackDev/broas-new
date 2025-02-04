@@ -4,3 +4,4 @@
 - add rate limit to posts
 - unify login and sign up into continue.
 - better auth ui
+- add a tab that order the posts by likes and creation date

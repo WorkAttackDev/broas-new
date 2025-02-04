@@ -1,6 +1,5 @@
 "use client";
 
-import { PlusCircle } from "lucide-react";
 import { ReactNode, useState, useTransition, useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import {
@@ -85,14 +84,7 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        {children || (
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            {post ? "Atualizar" : "Postar"}
-          </Button>
-        )}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         className="sm:max-w-[425px]"
         onCloseAutoFocus={(e) => e.preventDefault()}

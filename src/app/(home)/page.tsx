@@ -7,7 +7,6 @@ const INITIAL_POSTS = 20;
 const HomePage = async () => {
   const session = await auth();
   const initialPosts = await getPostsAction({
-    offset: 0,
     limit: INITIAL_POSTS,
   });
 

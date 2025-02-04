@@ -19,6 +19,20 @@ type Props = {
 
 const POSTS_PER_PAGE = 20;
 
+import { Card, CardContent } from "@/components/ui/card";
+
+const NoPosts = () => {
+  return (
+    <Card className="w-[80vw] mx-auto max-w-3xl">
+      <CardContent className=" flex flex-col items-center justify-center p-4">
+        <p className="text-gray-500 text-sm">
+          Nenhuma publicação encontrada, você pode criar uma agora!
+        </p>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default function PostList({ initialPosts, userId }: Props) {
   const listContainerRef = useRef<HTMLElement>(null);
   const { ref, inView } = useInView();
@@ -32,17 +46,18 @@ export default function PostList({ initialPosts, userId }: Props) {
       queryKey: [POSTS_CACHE_TAG],
       queryFn: ({ pageParam }) =>
         getPostsAction({
-          offset: pageParam,
+          cursor: pageParam,
           limit: POSTS_PER_PAGE,
         }),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage: PostWithLikesInfoType[], allPages) => {
-        if (lastPage.length < POSTS_PER_PAGE) return undefined;
-        return allPages.reduce((acc, page) => acc + page.length, 0);
+      initialPageParam: undefined,
+      getNextPageParam: (lastPage: PostWithLikesInfoType[]) => {
+        return lastPage.length > 0
+          ? lastPage[lastPage.length - 1].id
+          : undefined;
       },
       initialData: () => ({
         pages: [initialPosts],
-        pageParams: [0],
+        pageParams: [initialPosts[0]?.id],
       }),
     });
 
@@ -84,6 +99,7 @@ export default function PostList({ initialPosts, userId }: Props) {
           </div>
         )}
       </section>
+      {posts.length === 0 && <NoPosts />}
     </main>
   );
 }

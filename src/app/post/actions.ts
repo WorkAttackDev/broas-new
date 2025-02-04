@@ -84,21 +84,22 @@ export const togglePostLikeAction = async ({ postId }: { postId: string }) => {
 };
 
 export const getPostsAction = async ({
-  offset = 0,
   limit,
+  cursor,
 }: {
-  offset?: number;
   limit: number;
+  cursor?: string;
 }) => {
   return (
     await prisma.post.findMany({
-      skip: offset,
       take: limit,
-      orderBy: { createdAt: "desc" },
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       include: {
         author: true,
         likes: true,
       },
+      skip: cursor ? 1 : 0,
     })
   ).map(toPostWithLikesInfo);
 };
