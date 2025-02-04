@@ -33,8 +33,8 @@ type Props = {
 
 const PostCard = ({ post, children, userId, onAction }: Props) => {
   return (
-    <Card key={post.id}>
-      <CardContent className="pt-6 pb-4 flex justify-between gap-2">
+    <Card key={post.id} className="w-full">
+      <CardContent className="pt-6 pb-4 flex  justify-between gap-2">
         <span className="flex flex-col gap-2">
           <h2 className="font-bold text-secondary-foreground">
             {post.author?.name || "Desconhecido"}

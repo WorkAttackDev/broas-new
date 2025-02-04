@@ -76,7 +76,10 @@ export default function PostList({ initialPosts, userId }: Props) {
 
   return (
     <main className="p-4 w-full grid items-center">
-      <section ref={listContainerRef} className="grid gap-4 max-w-4xl mx-auto">
+      <section
+        ref={listContainerRef}
+        className="grid w-[80vw] gap-4 max-w-4xl mx-auto"
+      >
         {posts.map((post) => (
           <PostCard
             key={post.id}
