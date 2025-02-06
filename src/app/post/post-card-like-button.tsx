@@ -9,7 +9,7 @@ import { use } from "react";
 import { queryClient } from "../query-provider";
 import { useOptimistic } from "react";
 import Link from "next/link";
-import { links } from "@/utils/links";
+import { links } from "@/lib/links";
 import { toast } from "sonner";
 import { POSTS_CACHE_TAG } from "./constants";
 
@@ -69,7 +69,7 @@ const PostCardLikeButton = ({ post, userId }: Props) => {
     return (
       <div className="flex text-muted-foreground gap-2 text-sm items-center">
         <Link
-          href={links.signin.href}
+          href={links.signOn.href}
           className={cn(
             buttonVariants({
               variant: "ghost",

@@ -44,3 +44,18 @@ export async function deleteUserAction({ id }: { id: string }) {
     return { success: false, error: "Failed to delete user" };
   }
 }
+
+export const getUserProfileAction = async (userId: string) => {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      posts: {
+        include: {
+          author: true,
+        },
+        take: 50,
+        orderBy: { updatedAt: "desc" },
+      },
+    },
+  });
+};

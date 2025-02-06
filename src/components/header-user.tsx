@@ -1,8 +1,9 @@
 "use client";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
-import { links } from "@/utils/links";
+import { links } from "@/lib/links";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,8 @@ type Props = {
 };
 
 const HeaderUser = ({ session }: Props) => {
+  const pathname = usePathname();
+
   return (
     <div>
       {session ? (
@@ -50,18 +53,14 @@ const HeaderUser = ({ session }: Props) => {
         </DropdownMenu>
       ) : (
         <span className="flex gap-2">
-          <Link
-            href={links.signin.href}
-            className={buttonVariants({ variant: "default" })}
-          >
-            Entrar
-          </Link>
-          <Link
-            href={links.signup.href}
-            className={buttonVariants({ variant: "default" })}
-          >
-            Criar Conta
-          </Link>
+          {pathname !== links.signOn.href && (
+            <Link
+              href={links.signOn.href}
+              className={buttonVariants({ variant: "default" })}
+            >
+              Entrar
+            </Link>
+          )}
         </span>
       )}
     </div>

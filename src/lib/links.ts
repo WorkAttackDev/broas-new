@@ -12,13 +12,9 @@ export const links = {
     label: "Página Inicial",
     href: "/",
   },
-  signin: {
+  signOn: {
     label: "Entrar",
-    href: "/auth/signin",
-  },
-  signup: {
-    label: "Cadastrar",
-    href: "/auth/signup",
+    href: "/auth/sign-on",
   },
   profile: {
     label: "Perfil",

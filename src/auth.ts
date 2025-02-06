@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { links } from "./utils/links";
+import { links } from "./lib/links";
 
 const envSchema = z.object({
   AUTH_GOOGLE_ID: z.string().optional().default(""),
@@ -26,8 +26,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: links.signin.href,
-    newUser: links.signup.href,
+    signIn: links.signOn.href,
+    newUser: links.signOn.href,
   },
   secret: env.NEXTAUTH_SECRET,
 });

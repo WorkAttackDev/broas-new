@@ -21,7 +21,7 @@ const Header = async () => {
           className="w-14 sm:w-20 h-auto"
         />
       </Link>
-      <p className="text-gray-400 max-sm:hidden">
+      <p className="text-muted-foreground max-sm:hidden">
         encontre aqui as melhores broas
       </p>
       <span className="flex gap-4 items-center">

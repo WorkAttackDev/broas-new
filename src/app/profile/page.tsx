@@ -8,28 +8,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { prisma } from "@/lib/prisma";
 import { toPostWithLikesInfo } from "../post/controller";
 import ProfilePostsList from "./profile-posts-list";
 import UserActions from "./user-actions";
+import { getUserProfileAction } from "./actions";
+import { notFound } from "next/navigation";
 
 const ProfilePage = async () => {
   const session = await auth();
 
-  const user = await prisma.user.findUnique({
-    where: { id: session?.user?.id },
-    include: {
-      posts: {
-        include: {
-          author: true,
-        },
-        take: 50,
-      },
-    },
-  });
+  if (!session?.user?.id) {
+    return notFound();
+  }
+
+  const user = await getUserProfileAction(session.user.id);
 
   if (!user) {
-    return <div>User not found</div>;
+    return notFound();
   }
 
   const posts = user.posts.map(toPostWithLikesInfo);

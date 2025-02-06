@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { links } from "@/utils/links";
+import { links } from "@/lib/links";
 
 type Props = {
   children: React.ReactNode;

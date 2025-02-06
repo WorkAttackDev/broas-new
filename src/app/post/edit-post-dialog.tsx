@@ -27,6 +27,7 @@ import { editPostSchema, EditPostType, PostType } from "@/app/post/schema";
 import { queryClient } from "@/app/query-provider";
 import { toast } from "sonner";
 import { POSTS_CACHE_TAG } from "./constants";
+import { parseKnownError } from "@/lib/errors";
 
 type Props = {
   post?: PostType;
@@ -73,10 +74,24 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
     startTransition(async () =>
       post?.id
         ? updatePostAction(post.id, values)
-            .catch(() => toast.error("Ocorreu um erro ao atualizar o post"))
+            .catch((error) =>
+              toast.error(
+                parseKnownError({
+                  fallbackMessage: "Ocorreu um erro ao atualizar o post",
+                  error,
+                })
+              )
+            )
             .then(onSuccess)
         : createPostAction(values)
-            .catch(() => toast.error("Ocorreu um erro ao criar o post"))
+            .catch((error) =>
+              toast.error(
+                parseKnownError({
+                  fallbackMessage: "Ocorreu um erro ao criar o post",
+                  error,
+                })
+              )
+            )
             .then(onSuccess)
     );
   };
