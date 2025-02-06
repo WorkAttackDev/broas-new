@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import QueryProvider from "./query-provider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const comfortaa = Comfortaa({
   variable: "--font-sans",
@@ -30,6 +31,7 @@ export default async function RootLayout({
           {children}
           <Toaster richColors position="top-center" closeButton />
         </QueryProvider>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
       </body>
     </html>
   );
