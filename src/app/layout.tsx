@@ -30,8 +30,8 @@ export default async function RootLayout({
           <Header />
           {children}
           <Toaster richColors position="top-center" closeButton />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
         </QueryProvider>
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
       </body>
     </html>
   );
