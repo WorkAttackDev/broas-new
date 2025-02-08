@@ -36,46 +36,47 @@ type Props = {
 const PostCard = ({ post, children, userId, onAction }: Props) => {
   return (
     <Card key={post.id} className="w-full">
-      <CardContent className="py-4 sm:py-6 flex justify-between gap-2">
-        <span className="flex flex-col gap-1.5 sm:gap-2">
+      <CardContent className="py-4 sm:py-6 flex flex-col gap-2">
+        <div className="flex justify-between gap-4 sm:gap-6">
           <h2 className="font-bold text-sm sm:text-base text-secondary-foreground">
             {post.author?.name || "Desconhecido"}
           </h2>
-          {post.right && post.wrong ? (
-            <span className="flex flex-col gap-2">
-              <p className="text-sm sm:text-base text-muted-foreground flex items-center gap-2">
-                <ThumbsUp className="size-4" strokeWidth={1} /> {post.right}
-              </p>
-              <p className="text-sm sm:text-base font-bold text-muted-foreground flex items-center gap-2">
-                <SmileIcon className="size-5 text-secondary-foreground" />
-                {post.wrong}
-              </p>
-            </span>
-          ) : (
-            <p className="text-sm sm:text-base text-muted-foreground">
-              {post.content}
-            </p>
+          {post.author?.id === userId && (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="h-fit p-1.5 sm:p-2 hover:bg-muted rounded-full outline-muted -mr-2">
+                <EllipsisVertical className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => onAction({ post, action: "edit" })}
+                >
+                  Atualizar
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => onAction({ post, action: "delete" })}
+                >
+                  Excluir
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
-        </span>
-        {post.author?.id === userId && (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="h-fit p-1.5 sm:p-2 hover:bg-muted rounded-full outline-muted -mr-2">
-              <EllipsisVertical className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={() => onAction({ post, action: "edit" })}
-              >
-                Atualizar
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => onAction({ post, action: "delete" })}
-              >
-                Excluir
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        </div>
+        {post.right && post.wrong ? (
+          <span className="flex flex-col gap-2">
+            <p className="text-sm sm:text-base text-muted-foreground flex items-start gap-2">
+              <ThumbsUp className="size-4 mt-1 flex-shrink-0" strokeWidth={1} />{" "}
+              {post.right}
+            </p>
+            <p className="text-sm sm:text-base font-bold text-muted-foreground flex items-start gap-2">
+              <SmileIcon className="size-5 mt-1 text-secondary-foreground" />
+              {post.wrong}
+            </p>
+          </span>
+        ) : (
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {post.content}
+          </p>
         )}
       </CardContent>
       <Separator />
