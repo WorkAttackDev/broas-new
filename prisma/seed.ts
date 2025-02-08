@@ -15,7 +15,8 @@ async function main() {
   });
 
   const posts = Array.from({ length: 100 }, () => ({
-    content: faker.lorem.paragraphs(3),
+    right: faker.lorem.paragraph(1),
+    wrong: faker.lorem.paragraph(1),
     authorId: faker.helpers.arrayElement(users).id,
   }));
 

@@ -13,10 +13,14 @@ export type PostWithLikesInfoType = PostType & {
 };
 
 export const editPostSchema = z.object({
-  content: z
+  right: z
     .string()
-    .min(5, "A publicação deve ter pelo menos 5 caracteres")
-    .max(300, "A publicação deve ter no máximo 300 caracteres"),
+    .min(5, "O campo correto deve ter pelo menos 5 caracteres")
+    .max(200, "O campo correto deve ter no máximo 200 caracteres"),
+  wrong: z
+    .string()
+    .min(5, "O campo errado deve ter pelo menos 5 caracteres")
+    .max(200, "O campo errado deve ter no máximo 200 caracteres"),
 });
 
 export type EditPostType = z.infer<typeof editPostSchema>;

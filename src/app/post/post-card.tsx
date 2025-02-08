@@ -6,8 +6,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { PostActionType, PostType } from "@/app/post/schema";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, ThumbsUp } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { SmileIcon } from "@/components/icons/smile-icon";
 
 export const PostCardSkeleton = () => {
   return (
@@ -40,9 +41,21 @@ const PostCard = ({ post, children, userId, onAction }: Props) => {
           <h2 className="font-bold text-sm sm:text-base text-secondary-foreground">
             {post.author?.name || "Desconhecido"}
           </h2>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            {post.content}
-          </p>
+          {post.right && post.wrong ? (
+            <span className="flex flex-col gap-2">
+              <p className="text-sm sm:text-base text-muted-foreground flex items-center gap-2">
+                <ThumbsUp className="size-4" strokeWidth={1} /> {post.right}
+              </p>
+              <p className="text-sm sm:text-base font-bold text-muted-foreground flex items-center gap-2">
+                <SmileIcon className="size-5 text-secondary-foreground" />
+                {post.wrong}
+              </p>
+            </span>
+          ) : (
+            <p className="text-sm sm:text-base text-muted-foreground">
+              {post.content}
+            </p>
+          )}
         </span>
         {post.author?.id === userId && (
           <DropdownMenu>

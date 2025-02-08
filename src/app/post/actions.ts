@@ -24,13 +24,14 @@ export async function createPostAction(values: EditPostType) {
 
   if (!success) {
     throw toKnownError(
-      `Só pode enviar ${limit} post por hora. Restam ` + remaining
+      `Só pode enviar ${limit} post por hora. Restam ` + remaining
     );
   }
 
   await prisma.post.create({
     data: {
-      content: values.content,
+      right: values.right,
+      wrong: values.wrong,
       authorId: user.id,
     },
   });
@@ -47,7 +48,8 @@ export async function updatePostAction(postId: string, values: EditPostType) {
       authorId: user.id,
     },
     data: {
-      content: values.content,
+      right: values.right,
+      wrong: values.wrong,
     },
   });
 

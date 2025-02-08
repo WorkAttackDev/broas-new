@@ -19,6 +19,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../../components/ui/form";
 import { Textarea } from "../../components/ui/textarea";
@@ -40,11 +41,14 @@ type Props = {
 const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
   const [isOpen, setIsOpen] = useState(open);
 
+  const defaultValues = {
+    right: post?.right || post?.content || "",
+    wrong: post?.wrong || post?.content || "",
+  };
+
   useEffect(() => {
     setIsOpen(open);
-    form.reset({
-      content: post?.content || "",
-    });
+    form.reset(defaultValues);
   }, [open]);
 
   const onOpenChange = setOpen || setIsOpen;
@@ -53,9 +57,7 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
 
   const form = useForm<EditPostType>({
     resolver: zodResolver(editPostSchema),
-    defaultValues: {
-      content: post?.content || "",
-    },
+    defaultValues: defaultValues,
   });
 
   const { handleSubmit, control } = form;
@@ -118,14 +120,31 @@ const EditPostDialog = ({ post, children, open, setOpen }: Props) => {
           >
             <FormField
               control={control}
-              name="content"
+              name="right"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel htmlFor="content">Conteúdo</FormLabel> */}
+                  <FormLabel>Correto</FormLabel>
                   <FormControl>
                     <Textarea
-                      id="content"
-                      placeholder="Escreva algo..."
+                      id="right"
+                      placeholder="O que está certo..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="wrong"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Broa</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="wrong"
+                      placeholder="O que está errado..."
                       {...field}
                     />
                   </FormControl>

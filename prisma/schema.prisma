@@ -67,7 +67,9 @@ model VerificationToken {
 
 model Post {
     id        String   @id @default(cuid())
-    content   String
+    content   String?
+    right     String?  @db.VarChar(200)
+    wrong     String?  @db.VarChar(200)
     likes     Like[]
     author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
     authorId  String?
